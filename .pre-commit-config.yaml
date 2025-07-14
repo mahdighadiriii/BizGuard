@@ -1,0 +1,75 @@
+default_language_version:
+  python: python3.10
+exclude: '.*migrations\/.*|.*__pycache__\/.*|.*\.pyc$|.*\.log$'
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: '\.min\.(js|css)$'
+      - id: end-of-file-fixer
+      - id: check-json
+      - id: check-toml
+      - id: check-yaml
+        args: [--allow-multiple-documents]
+      - id: debug-statements
+      - id: check-builtin-literals
+      - id: check-case-conflict
+      - id: detect-private-key
+        exclude: '.*public_key\.pem$'
+      - id: check-docstring-first
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: [--maxkb=500]
+      - id: check-ast
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.17.0
+    hooks:
+      - id: pyupgrade
+        args: [--py310-plus, --keep-runtime-typing]
+  - repo: https://github.com/adamchainz/django-upgrade
+    rev: '1.22.1'
+    hooks:
+      - id: django-upgrade
+        args: ['--target-version', '5.0']
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.8
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix, --config, ./bizguard/pyproject.toml]
+      - id: ruff-format
+        args: [--config, ./bizguard/pyproject.toml]
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: [--profile, black, --filter-files, --config-root, ./bizguard]
+  - repo: https://github.com/psf/black
+    rev: 24.8.0
+    hooks:
+      - id: black
+        args: [--config, ./bizguard/pyproject.toml]
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.11.2
+    hooks:
+      - id: mypy
+        args: ["--config-file", "./bizguard/pyproject.toml", "--show-error-codes", "--strict"]
+        additional_dependencies:
+          - django-stubs==5.1.0
+          - djangorestframework-stubs==3.15.1
+          - djangorestframework==3.15.2
+          - python-telegram-bot==21.4
+          - opentelemetry-distro==0.47b0
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.10
+    hooks:
+      - id: bandit
+        args: [-c, ./bizguard/pyproject.toml, -r, ./bizguard/src]
+        exclude: 'tests/|migrations/'
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v4.0.0-alpha.8
+    hooks:
+      - id: prettier
+        types: [markdown, yaml]
+        files: '\.(md|yaml|yml)$'
+        args: [--write]
