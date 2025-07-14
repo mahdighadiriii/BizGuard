@@ -1,0 +1,29 @@
+services:
+  bizguard-cdb:
+    image: postgres:16-alpine
+    container_name: bizguard-cdb
+    hostname: bizguard-cdb
+    env_file:
+      - ./secrets/.env
+    environment:
+      - POSTGRES_INITDB_ARGS=--data-checksums
+    volumes:
+      - bizguard_postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      bizguard:
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+networks:
+  bizguard:
+    external: true
+
+volumes:
+  bizguard_postgres_data:
+
