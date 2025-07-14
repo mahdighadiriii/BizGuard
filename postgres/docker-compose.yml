@@ -26,4 +26,3 @@ networks:
 
 volumes:
   bizguard_postgres_data:
-

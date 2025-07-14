@@ -1,5 +1,5 @@
 default_language_version:
-  python: python3.10
+  python: python3.12
 exclude: '.*migrations\/.*|.*__pycache__\/.*|.*\.pyc$|.*\.log$'
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
