@@ -30,6 +30,6 @@ repos:
     rev: v0.3.5
     hooks:
       - id: ruff
-        args: [--fix, --exit-non-zero-on-fix, --config, ./g-map/pyproject.toml]
+        args: [--fix, --exit-non-zero-on-fix, --config, ./bizguard/pyproject.toml]
       - id: ruff-format
-        args: [--config, ./g-map/pyproject.toml]
+        args: [--config, ./bizguard/pyproject.toml]
