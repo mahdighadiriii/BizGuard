@@ -13,6 +13,7 @@ services:
       - "5432:5432"
     networks:
       bizguard:
+        ipv4_address: 192.168.200.2
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 10s
@@ -22,11 +23,8 @@ services:
 
 networks:
   bizguard:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 192.168.200.0/24
-          gateway: 192.168.200.1
+    external: true
+    name: bizguard
 
 volumes:
   bizguard_postgres_data:
