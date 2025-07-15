@@ -1,0 +1,40 @@
+services:
+  bizguard:
+    build: .
+    image: bizguard:0.1.0
+    container_name: bizguard
+    hostname: bizguard
+    command: bash initialize/bizguard_initialize.sh
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    ports:
+      - 8000:8000
+    volumes:
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - media_volume:/app/src/media
+      - static_volume:/app/src/staticfiles
+      #- "./src/apps/dcim/migrations:/app/src/apps/dcim/migrations"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+    networks:
+      bizguard:
+        ipv4_address: 192.168.200.3
+
+networks:
+  bizguard:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.200.0/24
+          gateway: 192.168.200.1
+
+volumes:
+  media_volume:
+    name: bizguard_media_volume
+  static_volume:
+    name: bizguard_static_volume
