@@ -7,34 +7,34 @@ class PlanChoices(models.TextChoices):
     ENTERPRISE = "enterprise"
 
 
-class PlanFeatures(models.TextChoices):
+class PlanFeaturesChoices(models.TextChoices):
     USER_LIMIT = "user_limit"
     STORAGE_LIMIT = "storage_limit"
     FEATURE_LIMIT = "feature_limit"
 
 
-class PlanStatus(models.TextChoices):
+class PlanStatusChoices(models.TextChoices):
     ACTIVE = "active"
     INACTIVE = "inactive"
     EXPIRED = "expired"
 
 
-class PlanType(models.TextChoices):
+class PlanTypeChoices(models.TextChoices):
     MONTHLY = "monthly"
     YEARLY = "yearly"
 
 
-class PlanDuration(models.TextChoices):
+class PlanDurationChoices(models.TextChoices):
     MONTH = "month"
     YEAR = "year"
 
 
-class PlanCurrency(models.TextChoices):
+class PlanCurrencyChoices(models.TextChoices):
     INR = "INR"
     USD = "USD"
 
 
-class AlertFrequency(models.TextChoices):
+class AlertFrequencyChoices(models.TextChoices):
     IMMEDIATE = "immediate"
     HOURLY = "hourly"
     DAILY = "daily"

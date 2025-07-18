@@ -6,11 +6,15 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from utils.base_model import BaseModel
-from utils.choices import AlertFrequency, PlanChoices
+from utils.choices import AlertFrequencyChoices, PlanChoices
 
 
 class User(AbstractUser, BaseModel):
-    choices = PlanChoices.choices
+    plan_choices = models.CharField(
+        max_length=20,
+        choices=PlanChoices.choices,
+        default=PlanChoices.FREE,
+    )
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(_("email address"), unique=True)
     first_name = models.CharField(_("first name"), blank=False)
@@ -50,8 +54,8 @@ class UserProfile(BaseModel):
     notification_preferences = models.JSONField(default=dict)
     alert_frequency = models.CharField(
         max_length=20,
-        choices=[AlertFrequency],
-        default="immediate",
+        choices=AlertFrequencyChoices.choices,
+        default=AlertFrequencyChoices.IMMEDIATE,
     )
 
     class Meta:
