@@ -36,7 +36,7 @@ ALLOWED_HOSTS = config(
 
 # Application definition
 LOCAL_APPS: list[str] = [
-    # "apps.dcim.apps.DcimConfig",
+    "apps.accounts.apps.AccountsConfig",
 ]
 
 THIRD_PARTY_APPS = [
