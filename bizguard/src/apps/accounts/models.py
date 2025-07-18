@@ -10,15 +10,10 @@ from utils.choices import AlertFrequencyChoices, PlanChoices
 
 
 class User(AbstractUser, BaseModel):
-    plan_choices = models.CharField(
-        max_length=20,
-        choices=PlanChoices.choices,
-        default=PlanChoices.FREE,
-    )
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(_("email address"), unique=True)
-    first_name = models.CharField(_("first name"), blank=False)
-    last_name = models.CharField(_("last name"), blank=False)
+    first_name = models.CharField(_("first name"), blank=True, null=True)
+    last_name = models.CharField(_("last name"), blank=True, null=True)
     telegram_user_id = models.CharField(max_length=255, blank=False)
     telegram_username = models.CharField(max_length=255, blank=False)
     phonenumber = models.CharField(
