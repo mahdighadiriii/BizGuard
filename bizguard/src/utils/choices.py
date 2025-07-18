@@ -74,3 +74,18 @@ class TriggerTypesChoices(models.TextChoices):
     SSL_EXPIRY = "SSL Certificate Expiry"
     SECURITY_ISSUE = "Security Issue Detected"
     ANOMALY = "Anomaly Detected"
+
+
+class AlertSeverityChoices(models.TextChoices):
+    INFO = "info"
+    WARNING = "warning"
+    ERROR = "error"
+    CRITICAL = "critical"
+
+
+class AlertStatusChoices(models.TextChoices):
+    PENDING = "pending"
+    SENT = "sent"
+    FAILED = "failed"
+    ACKNOWLEDGED = "acknowledged"
+    RESOLVED = "resolved"
