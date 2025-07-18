@@ -38,6 +38,7 @@ ALLOWED_HOSTS = config(
 LOCAL_APPS: list[str] = [
     "apps.accounts.apps.AccountsConfig",
     "apps.monitoring.apps.MonitoringConfig",
+    "apps.security.apps.SecurityConfig",
 ]
 
 THIRD_PARTY_APPS = [

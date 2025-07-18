@@ -32,6 +32,7 @@ _patterns = [
     path("metrics/", metrics_view, name="metrics"),
     path("accounts/", include("apps.accounts.urls")),
     path("monitoring/", include("apps.monitoring.urls")),
+    path("security/", include("apps.security.urls")),
 ]
 
 urlpatterns: list[URLPattern | URLResolver] = [

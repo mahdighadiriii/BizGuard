@@ -48,4 +48,4 @@ class SSLCertificates(BaseModel):
     last_checked = models.DateTimeField(auto_now=True)
 
     class Meta:
-        db_table = "ssl_certificate"
+        db_table = "ssl_certificates"
