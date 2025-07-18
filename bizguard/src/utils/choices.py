@@ -32,3 +32,9 @@ class PlanDuration(models.TextChoices):
 class PlanCurrency(models.TextChoices):
     INR = "INR"
     USD = "USD"
+
+
+class AlertFrequency(models.TextChoices):
+    IMMEDIATE = "immediate"
+    HOURLY = "hourly"
+    DAILY = "daily"

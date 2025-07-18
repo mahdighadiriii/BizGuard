@@ -5,7 +5,7 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from bizguard.src.utils.choices import PlanChoices
+from bizguard.src.utils.choices import AlertFrequency, PlanChoices
 
 from utils.base_model import BaseModel
 
@@ -14,10 +14,10 @@ class User(AbstractUser, BaseModel):
     choices = PlanChoices.choices
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(_("email address"), unique=True)
-    first_name = models.CharField(_("first name"), max_length=150, blank=True)
-    last_name = models.CharField(_("last name"), max_length=150, blank=True)
-    telegram_user_id = models.CharField(max_length=255, blank=True, null=True)
-    telegram_username = models.CharField(max_length=255, blank=True, null=True)
+    first_name = models.CharField(_("first name"), blank=False)
+    last_name = models.CharField(_("last name"), blank=False)
+    telegram_user_id = models.CharField(max_length=255, blank=False)
+    telegram_username = models.CharField(max_length=255, blank=False)
     phonenumber = models.CharField(
         max_length=15,
         validators=[RegexValidator(r"^\+?1?\d{9,15}$")],
@@ -51,11 +51,7 @@ class UserProfile(BaseModel):
     notification_preferences = models.JSONField(default=dict)
     alert_frequency = models.CharField(
         max_length=20,
-        choices=[
-            ("immediate", "Immediate"),
-            ("hourly", "Hourly"),
-            ("daily", "Daily"),
-        ],
+        choices=[AlertFrequency],
         default="immediate",
     )
 
