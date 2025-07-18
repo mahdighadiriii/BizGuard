@@ -62,7 +62,7 @@ class UptimeCheck(BaseModel):
         db_table = "uptime_checks"
         indexes = [
             models.Index(fields=["website", "checked_at"]),
-            models.index(fields=["status", "checked_at"]),
+            models.Index(fields=["status", "checked_at"]),
         ]
 
 
