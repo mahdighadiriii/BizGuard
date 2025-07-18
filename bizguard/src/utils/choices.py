@@ -51,3 +51,18 @@ class UpTimeStatusChoices(models.TextChoices):
     DOWN = "down"
     ERROR = "error"
     TIMEOUT = "timeout"
+
+
+class ScanTypesChoices(models.TextChoices):
+    SSL = "ssl"
+    VULNERABILITY = "vulnerability"
+    MALWARE = "malware"
+    BLACKLIST = "blacklist"
+
+
+class SeverityLevelsChoices(models.TextChoices):
+    INFO = "info"
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    CRITICAL = "critical"
