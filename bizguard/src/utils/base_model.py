@@ -9,7 +9,11 @@ class BaseModel(models.Model):
     is_deleted = models.BooleanField(default=False)  # type: ignore[assignment]
     deleted_at = models.DateTimeField(null=True, blank=True)
     deleted_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="deleted_%(class)s_set",
     )
 
     class Meta:

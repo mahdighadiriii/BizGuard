@@ -31,6 +31,7 @@ _patterns = [
     path("admin/", admin.site.urls),
     path("metrics/", metrics_view, name="metrics"),
     path("accounts/", include("apps.accounts.urls")),
+    path("monitoring/", include("apps.monitoring.urls")),
 ]
 
 urlpatterns: list[URLPattern | URLResolver] = [

@@ -17,6 +17,7 @@ services:
       - media_volume:/app/src/media
       - static_volume:/app/src/staticfiles
       - "./src/apps/accounts/migrations:/app/src/apps/accounts/migrations"
+      - "./src/apps/monitoring/migrations:/app/src/apps/monitoring/migrations"
     logging:
       driver: "json-file"
       options:

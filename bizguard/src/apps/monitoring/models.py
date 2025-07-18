@@ -13,20 +13,20 @@ User = get_user_model()
 class Website(BaseModel):
     """Website monitoring configuration"""
 
-    status = models.CharField(max_length=20, choices=StatusChoices)
-    id = models.UUIDField(primaray=True, default=uuid.uuid4, editable=False)
+    status = models.CharField(max_length=20, choices=StatusChoices.choices)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="website")
     name = models.CharField(max_length=95)
     url = models.URLField(validators=[URLValidator()])
-    check_interval = models.IntegerField(default=300)
-    timeout = models.IntegerField(default=30)
+    check_interval = models.IntegerField(default=300)  # type: ignore[assignment]
+    timeout = models.IntegerField(default=30)  # type: ignore[assignment]
 
     # Monitoring settings
-    check_ssl = models.BooleanField(default=True)
-    check_performance = models.BooleanField(default=True)
+    check_ssl = models.BooleanField(default=True)  # type: ignore[assignment]
+    check_performance = models.BooleanField(default=True)  # type: ignore[assignment]
 
     # Premium feature
-    check_security = models.BooleanField(default=True)
+    check_security = models.BooleanField(default=True)  # type: ignore[assignment]
 
     # Metadata
     last_check = models.DateTimeField(null=True, blank=True)
@@ -43,8 +43,8 @@ class Website(BaseModel):
 class UptimeCheck(BaseModel):
     """Indivisual uptime check status"""
 
-    uptime = models.CharField(max_length=20, choices=UpTimeStatusChoices)
-    id = models.UUIDField(primaray=True, default=uuid.uuid4, editable=False)
+    uptime = models.CharField(max_length=20, choices=UpTimeStatusChoices.choices)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     website = models.ForeignKey(
         Website, on_delete=models.CASCADE, related_name="uptime_checks"
     )
@@ -62,7 +62,7 @@ class UptimeCheck(BaseModel):
         db_table = "uptime_checks"
         indexes = [
             models.Index(fields=["website", "checked_at"]),
-            models.Index(fields=["status", "checked_at"]),
+            models.Index(fields=["uptime", "checked_at"]),
         ]
 
 

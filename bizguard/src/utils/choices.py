@@ -48,6 +48,6 @@ class StatusChoices(models.TextChoices):
 
 class UpTimeStatusChoices(models.TextChoices):
     UP = "up"
-    DOWN = "DOWN"
+    DOWN = "down"
     ERROR = "error"
     TIMEOUT = "timeout"
