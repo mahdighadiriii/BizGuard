@@ -38,3 +38,16 @@ class AlertFrequencyChoices(models.TextChoices):
     IMMEDIATE = "immediate"
     HOURLY = "hourly"
     DAILY = "daily"
+
+
+class StatusChoices(models.TextChoices):
+    ACTIVE = "active"
+    PAUSED = "paused"
+    DELETED = "deleted"
+
+
+class UpTimeStatusChoices(models.TextChoices):
+    UP = "up"
+    DOWN = "DOWN"
+    ERROR = "error"
+    TIMEOUT = "timeout"
