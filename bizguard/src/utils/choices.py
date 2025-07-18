@@ -89,3 +89,10 @@ class AlertStatusChoices(models.TextChoices):
     FAILED = "failed"
     ACKNOWLEDGED = "acknowledged"
     RESOLVED = "resolved"
+
+
+class TelegramMessageTypesChoices(models.TextChoices):
+    INCOMING = "incoming"
+    OUTGOING = "outgoing"
+    COMMAND = "command"
+    ALERT = "alert"
