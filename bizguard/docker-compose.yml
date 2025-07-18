@@ -16,7 +16,7 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - media_volume:/app/src/media
       - static_volume:/app/src/staticfiles
-      #- "./src/apps/dcim/migrations:/app/src/apps/dcim/migrations"
+      - "./src/apps/accounts/migrations:/app/src/apps/accounts/migrations"
     logging:
       driver: "json-file"
       options:
