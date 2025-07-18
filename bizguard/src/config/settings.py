@@ -39,6 +39,7 @@ LOCAL_APPS: list[str] = [
     "apps.accounts.apps.AccountsConfig",
     "apps.monitoring.apps.MonitoringConfig",
     "apps.security.apps.SecurityConfig",
+    "apps.alerts.apps.AlertsConfig",
 ]
 
 THIRD_PARTY_APPS = [
