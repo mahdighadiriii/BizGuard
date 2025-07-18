@@ -25,9 +25,9 @@ class SecurityScan(BaseModel):
     resolved_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
-        db_taable = "scurity_scans"
+        db_table = "scurity_scans"
         indexes = [
-            models.Index(fields=["website", "scan_type"]),
+            models.Index(fields=["website", "scan_types"]),
             models.Index(fields=["severity_levels", "is_resolved"]),
         ]
 
