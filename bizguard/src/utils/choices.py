@@ -66,3 +66,11 @@ class SeverityLevelsChoices(models.TextChoices):
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
+
+
+class TriggerTypesChoices(models.TextChoices):
+    DOWNTIME = "Website Down"
+    RESPONSE_TIME = "High Response Time"
+    SSL_EXPIRY = "SSL Certificate Expiry"
+    SECURITY_ISSUE = "Security Issue Detected"
+    ANOMALY = "Anomaly Detected"
