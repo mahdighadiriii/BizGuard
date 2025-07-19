@@ -14,9 +14,9 @@ class User(AbstractUser, BaseModel):
     email = models.EmailField(_("email address"), unique=True)
     first_name = models.CharField(_("first name"), blank=True, null=True)
     last_name = models.CharField(_("last name"), blank=True, null=True)
-    telegram_user_id = models.CharField(max_length=255, blank=False)
+    telegram_user_id = models.BigIntegerField(unique=True, max_length=255, blank=False)
     telegram_username = models.CharField(max_length=255, blank=False)
-    phonenumber = models.CharField(
+    phone_number = models.CharField(
         max_length=15,
         validators=[RegexValidator(r"^\+?1?\d{9,15}$")],
     )
