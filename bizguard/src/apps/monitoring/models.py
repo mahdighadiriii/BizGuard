@@ -26,13 +26,13 @@ class Website(BaseModel):
     check_performance = models.BooleanField(default=True)  # type: ignore[assignment]
 
     # Premium feature
-    check_security = models.BooleanField(default=True)  # type: ignore[assignment]
+    check_security = models.BooleanField(default=False)  # type: ignore[assignment]
 
     # Metadata
     last_check = models.DateTimeField(null=True, blank=True)
 
     class Meta:
-        db_table = "website"
+        db_table = "websites"
         unique_together = ["user", "url"]
         indexes = [
             models.Index(fields=["user", "status"]),
