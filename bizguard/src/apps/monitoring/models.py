@@ -13,9 +13,11 @@ User = get_user_model()
 class Website(BaseModel):
     """Website monitoring configuration"""
 
-    status = models.CharField(max_length=20, choices=StatusChoices.choices)
+    status = models.CharField(
+        max_length=20, choices=StatusChoices.choices, default="active"
+    )
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="website")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="websites")
     name = models.CharField(max_length=95)
     url = models.URLField(validators=[URLValidator()])
     check_interval = models.IntegerField(default=300)  # type: ignore[assignment]

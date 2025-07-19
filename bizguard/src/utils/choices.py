@@ -30,7 +30,7 @@ class PlanDurationChoices(models.TextChoices):
 
 
 class PlanCurrencyChoices(models.TextChoices):
-    INR = "INR"
+    INR = "IRR"
     USD = "USD"
 
 
