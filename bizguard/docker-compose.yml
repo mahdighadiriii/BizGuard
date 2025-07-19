@@ -23,6 +23,7 @@ services:
       - "./src/apps/telegram/migrations:/app/src/apps/telegram/migrations"
       - "./src/apps/analytics/migrations:/app/src/apps/analytics/migrations"
       - "./src/apps/payments/migrations:/app/src/apps/payments/migrations"
+      - "./src/apps/core/migrations:./app/src/apps/core/migrations"
     logging:
       driver: "json-file"
       options:
