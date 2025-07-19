@@ -110,3 +110,17 @@ class AnomalyTypeChoices(models.TextChoices):
     TRAFFIC_PATTERN = "Traffic Pattern Anomaly"
     ERROR_SPIKE = "Error Spike"
     SECURITY_THREAT = "Security Threat"
+
+
+class SubscriptionChoices(models.TextChoices):
+    ACTIVE = "active"
+    EXPIRED = "expired"
+    CANCELLED = "cancelled"
+    PENDING = "pending"
+
+
+class PaymentChoices(models.TextChoices):
+    PENDING = "pending"
+    COMPELETED = "compeleted"
+    FAILED = "failed"
+    REFUNDED = "refunded"
