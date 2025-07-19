@@ -96,3 +96,17 @@ class TelegramMessageTypesChoices(models.TextChoices):
     OUTGOING = "outgoing"
     COMMAND = "command"
     ALERT = "alert"
+
+
+class MetricTypeChoices(models.TextChoices):
+    RESPONSE_TIME = "response_time"
+    THROUGHPUT = "throughput"
+    ERROR_RATE = "error_rate"
+    AVAILABILITY = "availability"
+
+
+class AnomalyTypeChoices(models.TextChoices):
+    RESPONSE_TIME = "Response Time Anomaly"
+    TRAFFIC_PATTERN = "Traffic Pattern Anomaly"
+    ERROR_SPIKE = "Error Spike"
+    SECURITY_THREAT = "Security Threat"
