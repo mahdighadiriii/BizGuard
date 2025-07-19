@@ -20,7 +20,7 @@ class TelegramSession(BaseModel):
         db_table = "telegram_sessions"
 
 
-class TelegramMessages(BaseModel):
+class TelegramMessage(BaseModel):
     """Telegram message log"""
 
     message_type = models.CharField(
