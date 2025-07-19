@@ -34,6 +34,7 @@ _patterns = [
     path("monitoring/", include("apps.monitoring.urls")),
     path("security/", include("apps.security.urls")),
     path("alerts/", include("apps.alerts.urls")),
+    path("telegram/", include("apps.telegram.urls")),
 ]
 
 urlpatterns: list[URLPattern | URLResolver] = [

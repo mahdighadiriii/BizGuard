@@ -40,6 +40,7 @@ LOCAL_APPS: list[str] = [
     "apps.monitoring.apps.MonitoringConfig",
     "apps.security.apps.SecurityConfig",
     "apps.alerts.apps.AlertsConfig",
+    "apps.telegram.apps.TelegramConfig",
 ]
 
 THIRD_PARTY_APPS = [
