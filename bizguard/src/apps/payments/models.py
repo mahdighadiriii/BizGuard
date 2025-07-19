@@ -24,7 +24,6 @@ class Subscription(BaseModel):
 class Payment(BaseModel):
     """Payment transaction records"""
 
-    payment_choices = models.CharField(max_length=55, choices=PaymentChoices.choices)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="payments")
     subscription = models.ForeignKey(
         Subscription, on_delete=models.CASCADE, related_name="payments"
