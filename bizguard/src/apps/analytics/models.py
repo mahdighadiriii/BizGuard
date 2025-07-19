@@ -29,6 +29,7 @@ class AnomalyDetection(BaseModel):
         Website, on_delete=models.CASCADE, related_name="anomalies"
     )
     confidence_score = models.FloatField()
+    detected_at = models.DateTimeField(auto_now_add=True)
     is_confirmed = models.BooleanField(default=False)
     anomaly_data = models.JSONField(default=dict)
 
@@ -36,5 +37,5 @@ class AnomalyDetection(BaseModel):
         db_table = "anomaly_detections"
         indexes = [
             models.Index(fields=["website", "detected_at"]),
-            models.Index(fields=["anomaly_type", "confidence_score"]),
+            models.Index(fields=["anomaly_types", "confidence_score"]),
         ]
