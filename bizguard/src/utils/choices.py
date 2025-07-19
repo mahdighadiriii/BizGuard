@@ -124,3 +124,13 @@ class PaymentChoices(models.TextChoices):
     COMPELETED = "compeleted"
     FAILED = "failed"
     REFUNDED = "refunded"
+
+
+class CoreActionChoices(models.TextChoices):
+    CREATED = "created"
+    UPDATE = "update"
+    DELETE = "delete"
+    LOGIN = "login"
+    LOGOUT = "logout"
+    PAYMENT = "payment"
+    ALERT = "alert"
