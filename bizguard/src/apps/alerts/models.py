@@ -26,7 +26,7 @@ class AlertRule(BaseModel):
         db_table = "alert_rules"
         indexes = [
             models.Index(fields=["user", "is_active"]),
-            models.Index(fields=["website", "trigger_types"]),
+            models.Index(fields=["website", "trigger_type"]),
         ]
 
 
