@@ -23,9 +23,10 @@ class SecurityScan(BaseModel):
     scan_data = models.JSONField(default=dict)
     scanned_at = models.DateTimeField(auto_now_add=True)
     resolved_at = models.DateTimeField(null=True, blank=True)
+    recommendation = models.TextField(null=True, blank=True)
 
     class Meta:
-        db_table = "scurity_scans"
+        db_table = "security_scans"
         indexes = [
             models.Index(fields=["website", "scan_types"]),
             models.Index(fields=["severity_levels", "is_resolved"]),
