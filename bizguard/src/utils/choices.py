@@ -121,7 +121,7 @@ class SubscriptionChoices(models.TextChoices):
 
 class PaymentChoices(models.TextChoices):
     PENDING = "pending"
-    COMPELETED = "compeleted"
+    COMPLETED = "completed"
     FAILED = "failed"
     REFUNDED = "refunded"
 
