@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import TelegramMessages, TelegramSession
+from .models import TelegramMessage, TelegramSession
 
 
 @admin.register(TelegramSession)
@@ -10,7 +10,7 @@ class TelegramSessionAdmin(admin.ModelAdmin):
     readonly_fields = ("last_interaction",)
 
 
-@admin.register(TelegramMessages)
+@admin.register(TelegramMessage)
 class TelegramMessagesAdmin(admin.ModelAdmin):
     list_display = (
         "id",
