@@ -11,7 +11,7 @@ from utils.choices import AlertSeverityChoices, AlertStatusChoices, TriggerTypes
 class AlertRule(BaseModel):
     """Alert rule configuration"""
 
-    trigger_types = models.CharField(max_length=35, choices=TriggerTypesChoices.choices)
+    trigger_type = models.CharField(max_length=35, choices=TriggerTypesChoices.choices)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="alert_rules")
     website = models.ForeignKey(
