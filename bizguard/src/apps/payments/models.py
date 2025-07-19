@@ -29,7 +29,7 @@ class Payment(BaseModel):
     subscription = models.ForeignKey(
         Subscription, on_delete=models.CASCADE, related_name="payments"
     )
-    amount = models.DecimalField(max_digits=10, decimal_palces=2)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
     currency = models.CharField(max_length=3, default="IRR")
     status = models.CharField(max_length=55, choices=PaymentChoices.choices)
 
