@@ -9,12 +9,12 @@ class AlertRuleAdmin(admin.ModelAdmin):
         "id",
         "user",
         "website",
-        "trigger_types",
+        "trigger_type",
         "threshold_value",
         "is_active",
         "cooldown_period",
     )
-    list_filter = ("is_active", "trigger_types", "website", "user")
+    list_filter = ("is_active", "trigger_type", "website", "user")
     search_fields = ("id", "user__username", "website__name")
     ordering = ("-created_at",)
 
