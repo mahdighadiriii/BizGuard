@@ -32,6 +32,7 @@ class Website(BaseModel):
 
     # Metadata
     last_check = models.DateTimeField(null=True, blank=True)
+    auth_token = models.CharField(max_length=255, null=True, blank=True)
 
     class Meta:
         db_table = "websites"

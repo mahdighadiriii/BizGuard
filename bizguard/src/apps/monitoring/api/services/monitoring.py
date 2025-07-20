@@ -1,6 +1,6 @@
 import logging
 import socket
-from urllib.parse import urlparse
+from urllib.parse import urljoin, urlparse
 
 import requests
 from django.conf import settings
@@ -43,16 +43,19 @@ class WebsiteMonitoringService:
             elif status_code in (301, 302):
                 uptime_status = UpTimeStatusChoices.REDIRECT
                 redirect_url = response.headers.get("Location")
+                if redirect_url:
+                    redirect_url = urljoin(website.url, redirect_url)
                 details = {
                     "message": f"Redirect to {redirect_url}",
                     "redirect_url": redirect_url,
                 }
-                final_response = session.get(
-                    redirect_url,
-                    timeout=timeout,
-                    headers={"User-Agent": "BizGuard-Monitoring/1.0"},
-                )
-                status_code = final_response.status_code
+                if redirect_url:
+                    final_response = session.get(
+                        redirect_url,
+                        timeout=timeout,
+                        headers={"User-Agent": "BizGuard-Monitoring/1.0"},
+                    )
+                    status_code = final_response.status_code
 
             elif status_code == status.HTTP_429_TOO_MANY_REQUESTS:
                 uptime_status = UpTimeStatusChoices.ERROR
