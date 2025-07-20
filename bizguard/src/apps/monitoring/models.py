@@ -59,6 +59,7 @@ class UptimeCheck(BaseModel):
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     headers = models.JSONField(default=dict)
     content_length = models.IntegerField(null=True, blank=True)
+    redirect_url = models.URLField(null=True, blank=True)
 
     class Meta:
         db_table = "uptime_checks"

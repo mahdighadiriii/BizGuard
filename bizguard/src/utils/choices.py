@@ -51,6 +51,7 @@ class UpTimeStatusChoices(models.TextChoices):
     DOWN = "down"
     ERROR = "error"
     TIMEOUT = "timeout"
+    REDIRECT = "redirect"
 
 
 class ScanTypesChoices(models.TextChoices):
