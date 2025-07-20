@@ -28,7 +28,6 @@ class UptimeCheckSerializer(serializers.ModelSerializer):
             "uptime",
             "response_time",
             "status_code",
-            "error_code",
             "error_message",
             "checked_at",
             "headers",
