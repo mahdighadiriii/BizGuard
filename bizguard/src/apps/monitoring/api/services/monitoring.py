@@ -1,4 +1,6 @@
 import logging
+import socket
+from urllib.parse import urlparse
 
 import requests
 from django.utils import timezone
@@ -15,6 +17,9 @@ class WebsiteMonitoringService:
     def check_website_status(website: Website) -> dict:
         logger.info("Checking website: %s", website.url)
         try:
+            hostname = urlparse(website.url).hostname
+            ip_address = socket.gethostbyname(hostname) if hostname else None
+
             timeout = min(website.timeout, 30)
             start_time = timezone.now()
             response = requests.get(
@@ -31,9 +36,9 @@ class WebsiteMonitoringService:
                 uptime_status = UpTimeStatusChoices.UP
                 details = {"message": "The website is active."}
             elif status_code in (301, 302):
-                status_code = UpTimeStatusChoices.REDIRECT
+                uptime_status = UpTimeStatusChoices.REDIRECT
                 details = {
-                    "message": f"Redirect To{response.url}",
+                    "message": f"Redirect to {response.url}",
                     "redirect_url": response.url,
                 }
             elif status_code == status.HTTP_429_TOO_MANY_REQUESTS:
@@ -44,7 +49,7 @@ class WebsiteMonitoringService:
                 details = {"message": f"Server Error {status_code}"}
             else:
                 uptime_status = UpTimeStatusChoices.ERROR
-                details = {"message": f"Unkown Error! {status_code}"}
+                details = {"message": f"Unknown Error! {status_code}"}
 
             uptime_check = UptimeCheck.objects.create(
                 website=website,
@@ -54,11 +59,9 @@ class WebsiteMonitoringService:
                 headers=dict(response.headers),
                 content_length=len(response.content),
                 checked_at=timezone.now(),
-                error_message=details.get("messsage"),
+                error_message=details.get("message"),
                 redirect_url=details.get("redirect_url"),
-                ip_address=response.raw.connection.sock.getpeername()[0]
-                if response.raw.connection
-                else None,
+                ip_address=ip_address,
             )
 
             website.last_check = timezone.now()
@@ -72,8 +75,23 @@ class WebsiteMonitoringService:
                 "status_code": status_code,
                 "details": details,
                 "uptime_check_id": str(uptime_check.id),
+                "ip_address": ip_address,
             }
 
+        except (socket.gaierror, ValueError) as e:
+            logger.exception("DNS resolution failed for %s", website.url)
+            uptime_check = UptimeCheck.objects.create(
+                website=website,
+                uptime=UpTimeStatusChoices.ERROR,
+                error_message=f"DNS resolution failed: {e!s}",
+                checked_at=timezone.now(),
+            )
+            return {
+                "status": UpTimeStatusChoices.ERROR,
+                "url": website.url,
+                "details": {"message": f"DNS resolution failed: {e!s}"},
+                "uptime_check_id": str(uptime_check.id),
+            }
         except requests.exceptions.Timeout:
             logger.exception("Timeout checking %s", website.url)
             uptime_check = UptimeCheck.objects.create(
@@ -83,9 +101,9 @@ class WebsiteMonitoringService:
                 checked_at=timezone.now(),
             )
             return {
-                "status": UpTimeStatusChoices.DOWN,
+                "status": UpTimeStatusChoices.TIMEOUT,
                 "url": website.url,
-                "details": {"message": "Unable to connect to the server."},
+                "details": {"message": "Request expired"},
                 "uptime_check_id": str(uptime_check.id),
             }
         except Exception as e:
