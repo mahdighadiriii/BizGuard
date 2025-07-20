@@ -31,7 +31,7 @@ _patterns = [
     path("admin/", admin.site.urls),
     path("metrics/", metrics_view, name="metrics"),
     path("accounts/", include("apps.accounts.urls")),
-    path("monitoring/", include("apps.monitoring.urls")),
+    path("api/monitoring/", include("apps.monitoring.api.urls")),
     path("security/", include("apps.security.urls")),
     path("alerts/", include("apps.alerts.urls")),
     path("telegram/", include("apps.telegram.urls")),
