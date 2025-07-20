@@ -53,7 +53,7 @@ class WebsiteMonitoringService:
                 status_code=status_code,
                 headers=dict(response.headers),
                 content_length=len(response.content),
-                checked_at=timezone.timezone.now(),
+                checked_at=timezone.now(),
                 error_message=details.get("messsage"),
                 redirect_url=details.get("redirect_url"),
                 ip_address=response.raw.connection.sock.getpeername()[0]
@@ -80,7 +80,7 @@ class WebsiteMonitoringService:
                 website=website,
                 uptime=UpTimeStatusChoices.TIMEOUT,
                 error_message="Request expired",
-                checked_at=timezone.timezone.now(),
+                checked_at=timezone.now(),
             )
             return {
                 "status": UpTimeStatusChoices.DOWN,
