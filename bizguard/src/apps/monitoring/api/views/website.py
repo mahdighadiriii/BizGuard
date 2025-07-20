@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 from apps.monitoring.api.serializers.website import UptimeCheckSerializer
 from apps.monitoring.api.services.monitoring import WebsiteMonitoringService
 from apps.monitoring.models import UptimeCheck, Website
+from utils.choices import UpTimeStatusChoices
 
 logger = logging.getLogger("monitoring")
 
@@ -19,11 +20,21 @@ class WebsiteCheckView(APIView):
 
     def post(self, request, website_id):
         logger.info(
-            "User %s requested check for website %s", request.user.id, website_id
+            "User %s requested check for website %s",
+            request.user.id,
+            website_id,
         )
         try:
             website = Website.objects.get(id=website_id, user=request.user)
             result = WebsiteMonitoringService.check_website_status(website)
+            if result["status"] in [
+                UpTimeStatusChoices.ERROR,
+                UpTimeStatusChoices.TIMEOUT,
+            ]:
+                return Response(
+                    {"error": result["details"]["message"]},
+                    status=status.HTTP_503_SERVICE_UNAVAILABLE,
+                )
             serializer = self.serializer_class(
                 UptimeCheck.objects.get(id=result["uptime_check_id"])
             )
