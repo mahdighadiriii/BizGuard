@@ -3,6 +3,7 @@ import socket
 from urllib.parse import urlparse
 
 import requests
+from django.conf import settings
 from django.utils import timezone
 from rest_framework import status
 
@@ -22,11 +23,15 @@ class WebsiteMonitoringService:
 
             timeout = min(website.timeout, 30)
             start_time = timezone.now()
+            session = requests.session()
             response = requests.get(
                 website.url,
                 timeout=timeout,
-                allow_redirects=True,
-                headers={"User-Agent": "BizGuard-Monitoring/1.0"},
+                allow_redirects=False,
+                headers={
+                    "User-Agent": "BizGuard-Monitoring/1.0",
+                    "Authorization": f"Basic {settings.MONITORING_AUTH_TOKEN}",
+                },
             )
             end_time = timezone.now()
             response_time = (end_time - start_time).total_seconds() * 1000
@@ -37,10 +42,18 @@ class WebsiteMonitoringService:
                 details = {"message": "The website is active."}
             elif status_code in (301, 302):
                 uptime_status = UpTimeStatusChoices.REDIRECT
+                redirect_url = response.headers.get("Location")
                 details = {
-                    "message": f"Redirect to {response.url}",
-                    "redirect_url": response.url,
+                    "message": f"Redirect to {redirect_url}",
+                    "redirect_url": redirect_url,
                 }
+                final_response = session.get(
+                    redirect_url,
+                    timeout=timeout,
+                    headers={"User-Agent": "BizGuard-Monitoring/1.0"},
+                )
+                status_code = final_response.status_code
+
             elif status_code == status.HTTP_429_TOO_MANY_REQUESTS:
                 uptime_status = UpTimeStatusChoices.ERROR
                 details = {"message": "Limit on the number of requests"}
