@@ -1,10 +1,13 @@
 import logging
 import socket
+import ssl
+from datetime import datetime
 from urllib.parse import urljoin, urlparse
 
 import requests
 from django.conf import settings
 from django.utils import timezone
+from OpenSSL import crypto
 from rest_framework import status
 
 from apps.monitoring.models import UptimeCheck, Website
@@ -80,6 +83,56 @@ class WebsiteMonitoringService:
         return status_code, uptime_status, details, redirect_url
 
     @staticmethod
+    def _check_ssl_details(website):
+        """SSL Detail"""
+        if not website.check_ssl or urlparse(website.url).scheme != "https":
+            return {
+                "ssl_enabled": False,
+                "details": "SSL check is disabled or URL is not HTTPS",
+            }
+
+        hostname = urlparse(website.url).hostname
+        try:
+            context = ssl.create_default_context()
+            with (
+                socket.create_connection(
+                    (hostname, 443), timeout=website.timeout
+                ) as sock,
+                context.wrap_socket(sock, server_hostname=hostname) as ssock,
+            ):
+                cert = ssock.getpeercert(True)
+                x509 = crypto.load_certificate(crypto.FILETYPE_ASN1, cert)
+
+                issuer = x509.get_issuer().CN
+                # Parse as UTC and make timezone-aware
+                expiry_date = datetime.strptime(
+                    x509.get_notAfter().decode("ascii"), "%Y%m%d%H%M%SZ"
+                ).replace(tzinfo=timezone.utc)
+                start_date = datetime.strptime(
+                    x509.get_notBefore().decode("ascii"), "%Y%m%d%H%M%SZ"
+                ).replace(tzinfo=timezone.utc)
+                days_to_expiry = (expiry_date - datetime.now(timezone.utc)).days
+                serial_number = x509.get_serial_number()
+                cipher = ssock.cipher()[0] if ssock.cipher() else None
+
+                return {
+                    "ssl_enabled": True,
+                    "ssl_issuer": issuer,
+                    "ssl_start_date": start_date.isoformat(),
+                    "ssl_expiry_date": expiry_date.isoformat(),
+                    "ssl_days_to_expiry": days_to_expiry,
+                    "ssl_valid": days_to_expiry > 0,
+                    "ssl_serial_number": str(serial_number),
+                    "ssl_cipher": cipher,
+                }
+        except (socket.gaierror, ssl.SSLError, TimeoutError):
+            logger.exception("SSL check failed for %s", website.url)
+            return {"ssl_enabled": False, "error": "SSL check failed"}
+        except Exception:
+            logger.exception("Unexpected error in SSL check for %s", website.url)
+            return {"ssl_enabled": False, "error": "Unexpected error"}
+
+    @staticmethod
     def check_website_status(website: Website) -> dict:
         logger.info("Checking website: %s", website.url)
         try:
@@ -91,6 +144,7 @@ class WebsiteMonitoringService:
             if ssl_result:
                 return ssl_result
 
+            ssl_details = WebsiteMonitoringService._check_ssl_details(website)
             timeout = min(website.timeout, 30)
             start_time = timezone.now()
             session = requests.Session()
@@ -142,6 +196,7 @@ class WebsiteMonitoringService:
                 "details": details,
                 "uptime_check_id": str(uptime_check.id),
                 "ip_address": ip_address,
+                "ssl_details": ssl_details,
             }
 
         except (socket.gaierror, ValueError) as e:
@@ -159,6 +214,10 @@ class WebsiteMonitoringService:
                 "details": {"message": f"DNS resolution failed: {e!s}"},
                 "uptime_check_id": str(uptime_check.id),
                 "ip_address": ip_address,
+                "ssl_details": {
+                    "ssl_enabled": False,
+                    "error": "DNS resolution failed",
+                },
             }
         except requests.exceptions.Timeout:
             logger.exception("Timeout checking %s", website.url)

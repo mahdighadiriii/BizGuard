@@ -20,6 +20,7 @@ class WebSiteSerializer(serializers.ModelSerializer):
 
 class UptimeCheckSerializer(serializers.ModelSerializer):
     website = WebSiteSerializer(read_only=True)
+    ssl_details = serializers.SerializerMethodField()
 
     class Meta:
         model = UptimeCheck
@@ -35,4 +36,8 @@ class UptimeCheckSerializer(serializers.ModelSerializer):
             "content_length",
             "redirect_url",
             "ip_address",
+            "ssl_details",
         ]
+
+    def get_ssl_details(self, obj):
+        return getattr(obj, "ssl_details", None)

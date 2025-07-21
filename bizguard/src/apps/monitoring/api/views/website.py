@@ -35,9 +35,9 @@ class WebsiteCheckView(APIView):
                     {"error": result["details"]["message"]},
                     status=status.HTTP_503_SERVICE_UNAVAILABLE,
                 )
-            serializer = self.serializer_class(
-                UptimeCheck.objects.get(id=result["uptime_check_id"])
-            )
+            uptime_check = UptimeCheck.objects.get(id=result["uptime_check_id"])
+            uptime_check.ssl_details = result.get("ssl_details")
+            serializer = self.serializer_class(uptime_check)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Website.DoesNotExist:
             logger.exception(
