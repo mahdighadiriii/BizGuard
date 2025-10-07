@@ -1,0 +1,315 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1600">
+  <!-- Background Rectangle -->
+  <rect x="0" y="0" width="1600" height="1600" fill="#FFFFFF"/>
+
+  <!-- Definitions -->
+  <defs>
+    <marker id="grpc-arrow" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto">
+      <polygon points="0 0, 12 6, 0 12" fill="#1976D2"/>
+    </marker>
+    <marker id="rest-arrow" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto">
+      <polygon points="0 0, 12 6, 0 12" fill="#388E3C"/>
+    </marker>
+    <marker id="kafka-arrow" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto">
+      <polygon points="0 0, 12 6, 0 12" fill="#7B1FA2"/>
+    </marker>
+    <marker id="mqtt-arrow" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto">
+      <polygon points="0 0, 12 6, 0 12" fill="#D32F2F"/>
+    </marker>
+    <filter id="shadow">
+      <feDropShadow dx="3" dy="3" stdDeviation="3" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Title -->
+  <text x="800" y="30" text-anchor="middle" font-size="22" font-weight="bold" fill="#1565C0">
+    Ridesharing Architecture - 9 Microservices + PostgreSQL/ScyllaDB
+  </text>
+
+  <!-- ===================== EDGE LAYER ===================== -->
+  <g id="edge-layer">
+    <rect x="50" y="60" width="320" height="160" fill="#E3F2FD" stroke="#1565C0" stroke-width="3" filter="url(#shadow)" rx="8"/>
+    <text x="210" y="85" text-anchor="middle" font-size="16" font-weight="bold" fill="#0D47A1">📱 Edge Layer</text>
+    
+    <rect x="70" y="100" width="130" height="50" fill="#42A5F5" stroke="#1565C0" stroke-width="2" rx="5"/>
+    <text x="135" y="122" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Driver App</text>
+    <text x="135" y="138" text-anchor="middle" font-size="10" fill="white">React Native</text>
+    
+    <rect x="220" y="100" width="130" height="50" fill="#42A5F5" stroke="#1565C0" stroke-width="2" rx="5"/>
+    <text x="285" y="122" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Passenger App</text>
+    <text x="285" y="138" text-anchor="middle" font-size="10" fill="white">React Native</text>
+    
+    <rect x="70" y="165" width="130" height="45" fill="#90CAF9" stroke="#1976D2" stroke-width="1.5" rx="4"/>
+    <text x="135" y="185" text-anchor="middle" font-size="11" fill="#0D47A1">SQLite Cache</text>
+    <text x="135" y="200" text-anchor="middle" font-size="9" fill="#1565C0">5GB Protobuf</text>
+    
+    <rect x="220" y="165" width="130" height="45" fill="#90CAF9" stroke="#1976D2" stroke-width="1.5" rx="4"/>
+    <text x="285" y="185" text-anchor="middle" font-size="11" fill="#0D47A1">MQTT Client</text>
+    <text x="285" y="200" text-anchor="middle" font-size="9" fill="#1565C0">QoS 1, Offline</text>
+  </g>
+
+  <!-- ===================== API GATEWAY ===================== -->
+  <g id="gateway">
+    <rect x="450" y="60" width="280" height="220" fill="#F3E5F5" stroke="#6A1B9A" stroke-width="3" filter="url(#shadow)" rx="8"/>
+    <text x="590" y="85" text-anchor="middle" font-size="16" font-weight="bold" fill="#4A148C">🛡️ API Gateway Layer</text>
+    
+    <rect x="470" y="100" width="240" height="45" fill="#7B1FA2" stroke="#4A148C" stroke-width="2" rx="5"/>
+    <text x="590" y="120" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Traefik Gateway</text>
+    <text x="590" y="135" text-anchor="middle" font-size="10" fill="white">Reverse Proxy + Load Balancer</text>
+    
+    <rect x="470" y="160" width="110" height="50" fill="#9C27B0" stroke="#6A1B9A" stroke-width="1.5" rx="4"/>
+    <text x="525" y="180" text-anchor="middle" font-size="11" fill="white">Keycloak SSO</text>
+    <text x="525" y="195" text-anchor="middle" font-size="9" fill="#E1BEE7">mTLS + JWT</text>
+    
+    <rect x="600" y="160" width="110" height="50" fill="#9C27B0" stroke="#6A1B9A" stroke-width="1.5" rx="4"/>
+    <text x="655" y="177" text-anchor="middle" font-size="11" fill="white">Rate Limiter</text>
+    <text x="655" y="190" text-anchor="middle" font-size="9" fill="#E1BEE7">Redis Sliding</text>
+    <text x="655" y="203" text-anchor="middle" font-size="9" fill="#E1BEE7">Window</text>
+    
+    <rect x="470" y="220" width="240" height="45" fill="#9C27B0" stroke="#6A1B9A" stroke-width="1.5" rx="4"/>
+    <text x="590" y="240" text-anchor="middle" font-size="11" fill="white">Distributed Rate Limiter</text>
+    <text x="590" y="255" text-anchor="middle" font-size="9" fill="#E1BEE7">Redis Cluster</text>
+  </g>
+
+  <!-- ===================== MICROSERVICES (9 Services) ===================== -->
+  <g id="microservices">
+    <rect x="50" y="320" width="1100" height="680" fill="#E8F5E9" stroke="#2E7D32" stroke-width="3" filter="url(#shadow)" rx="8"/>
+    <text x="600" y="345" text-anchor="middle" font-size="16" font-weight="bold" fill="#1B5E20">⚙️ Microservices (Kubernetes Cluster)</text>
+    
+    <!-- Row 1: Core Services -->
+    <rect x="70" y="370" width="200" height="90" fill="#009688" stroke="#00695C" stroke-width="2" rx="5"/>
+    <text x="170" y="392" text-anchor="middle" font-size="14" font-weight="bold" fill="white">1. DriverAvailability</text>
+    <text x="170" y="410" text-anchor="middle" font-size="11" fill="#B2DFDB">FastAPI + Hexagonal</text>
+    <line x1="75" y1="418" x2="265" y2="418" stroke="#B2DFDB" stroke-width="1"/>
+    <text x="170" y="430" text-anchor="middle" font-size="9" fill="white">Location Logic (VO/HMM)</text>
+    <text x="170" y="443" text-anchor="middle" font-size="9" fill="white">Particle Filter + XGBoost</text>
+    <text x="170" y="455" text-anchor="middle" font-size="8" fill="#80CBC4">Latency: &lt;50ms</text>
+    
+    <rect x="290" y="370" width="200" height="90" fill="#009688" stroke="#00695C" stroke-width="2" rx="5"/>
+    <text x="390" y="392" text-anchor="middle" font-size="14" font-weight="bold" fill="white">2. RideRequest</text>
+    <text x="390" y="410" text-anchor="middle" font-size="11" fill="#B2DFDB">FastAPI + DDD</text>
+    <line x1="295" y1="418" x2="485" y2="418" stroke="#B2DFDB" stroke-width="1"/>
+    <text x="390" y="430" text-anchor="middle" font-size="9" fill="white">Ride Lifecycle Manager</text>
+    <text x="390" y="443" text-anchor="middle" font-size="9" fill="white">Validation + State Machine</text>
+    <text x="390" y="455" text-anchor="middle" font-size="8" fill="#80CBC4">PostgreSQL (ACID)</text>
+    
+    <rect x="510" y="370" width="200" height="90" fill="#009688" stroke="#00695C" stroke-width="2" rx="5"/>
+    <text x="610" y="392" text-anchor="middle" font-size="14" font-weight="bold" fill="white">3. MatchingEngine</text>
+    <text x="610" y="410" text-anchor="middle" font-size="11" fill="#B2DFDB">FastAPI + DDD (Stateless)</text>
+    <line x1="515" y1="418" x2="705" y2="418" stroke="#B2DFDB" stroke-width="1"/>
+    <text x="610" y="430" text-anchor="middle" font-size="9" fill="white">H3 Spatial Index</text>
+    <text x="610" y="443" text-anchor="middle" font-size="9" fill="white">Redis Geospatial Query</text>
+    <text x="610" y="455" text-anchor="middle" font-size="8" fill="#80CBC4">Latency: &lt;20ms</text>
+    
+    <rect x="730" y="370" width="200" height="90" fill="#009688" stroke="#00695C" stroke-width="2" rx="5"/>
+    <text x="830" y="392" text-anchor="middle" font-size="14" font-weight="bold" fill="white">4. Dispatch</text>
+    <text x="830" y="410" text-anchor="middle" font-size="11" fill="#B2DFDB">FastAPI + Hexagonal</text>
+    <line x1="735" y1="418" x2="925" y2="418" stroke="#B2DFDB" stroke-width="1"/>
+    <text x="830" y="430" text-anchor="middle" font-size="9" fill="white">Driver/Passenger Notifications</text>
+    <text x="830" y="443" text-anchor="middle" font-size="9" fill="white">Accept/Reject Management</text>
+    <text x="830" y="455" text-anchor="middle" font-size="8" fill="#80CBC4">MQTT + SMS/USSD</text>
+    
+    <!-- Row 2: Core Services Continued -->
+    <rect x="70" y="485" width="200" height="90" fill="#009688" stroke="#00695C" stroke-width="2" rx="5"/>
+    <text x="170" y="507" text-anchor="middle" font-size="14" font-weight="bold" fill="white">5. TripExecution</text>
+    <text x="170" y="525" text-anchor="middle" font-size="11" fill="#B2DFDB">Django REST + DDD</text>
+    <line x1="75" y1="533" x2="265" y2="533" stroke="#B2DFDB" stroke-width="1"/>
+    <text x="170" y="545" text-anchor="middle" font-size="9" fill="white">Trip State Machine</text>
+    <text x="170" y="558" text-anchor="middle" font-size="9" fill="white">Real-time Tracking</text>
+    <text x="170" y="570" text-anchor="middle" font-size="8" fill="#80CBC4">ScyllaDB (Time-series)</text>
+    
+    <!-- Row 3: EV + Infrastructure Services -->
+    <rect x="290" y="485" width="200" height="90" fill="#00897B" stroke="#00695C" stroke-width="2" rx="5"/>
+    <text x="390" y="507" text-anchor="middle" font-size="14" font-weight="bold" fill="white">6. BatteryIntelligence</text>
+    <text x="390" y="525" text-anchor="middle" font-size="11" fill="#B2DFDB">FastAPI + Hexagonal</text>
+    <line x1="295" y1="533" x2="485" y2="533" stroke="#B2DFDB" stroke-width="1"/>
+    <text x="390" y="545" text-anchor="middle" font-size="9" fill="white">XGBoost Range Predictor</text>
+    <text x="390" y="558" text-anchor="middle" font-size="9" fill="white">Temp/Load Compensation</text>
+    <text x="390" y="570" text-anchor="middle" font-size="8" fill="#80CBC4">Cassandra (Telemetry)</text>
+    
+    <rect x="510" y="485" width="200" height="90" fill="#00897B" stroke="#00695C" stroke-width="2" rx="5"/>
+    <text x="610" y="507" text-anchor="middle" font-size="14" font-weight="bold" fill="white">7. ChargingOrch.</text>
+    <text x="610" y="525" text-anchor="middle" font-size="11" fill="#B2DFDB">Django REST + DDD</text>
+    <line x1="515" y1="533" x2="705" y2="533" stroke="#B2DFDB" stroke-width="1"/>
+    <text x="610" y="545" text-anchor="middle" font-size="9" fill="white">Station Routing + Queue</text>
+    <text x="610" y="558" text-anchor="middle" font-size="9" fill="white">Mobile Charger Dispatch</text>
+    <text x="610" y="570" text-anchor="middle" font-size="8" fill="#80CBC4">PostgreSQL + Redis</text>
+    
+    <rect x="730" y="485" width="200" height="90" fill="#0C4B33" stroke="#092E20" stroke-width="2" rx="5"/>
+    <text x="830" y="507" text-anchor="middle" font-size="14" font-weight="bold" fill="white">8. Payment</text>
+    <text x="830" y="525" text-anchor="middle" font-size="11" fill="#C8E6C9">Django REST + Hex.</text>
+    <line x1="735" y1="533" x2="925" y2="533" stroke="#C8E6C9" stroke-width="1"/>
+    <text x="830" y="545" text-anchor="middle" font-size="9" fill="white">ZarinPal Integration</text>
+    <text x="830" y="558" text-anchor="middle" font-size="9" fill="white">Wallet + Surge Pricing</text>
+    <text x="830" y="570" text-anchor="middle" font-size="8" fill="#A5D6A7">PostgreSQL (ACID)</text>
+    
+    <rect x="950" y="485" width="180" height="90" fill="#00897B" stroke="#00695C" stroke-width="2" rx="5"/>
+    <text x="1040" y="507" text-anchor="middle" font-size="14" font-weight="bold" fill="white">9. OfflineSync</text>
+    <text x="1040" y="525" text-anchor="middle" font-size="11" fill="#B2DFDB">FastAPI + Hexagonal</text>
+    <line x1="955" y1="533" x2="1125" y2="533" stroke="#B2DFDB" stroke-width="1"/>
+    <text x="1040" y="545" text-anchor="middle" font-size="9" fill="white">CRDT Conflict Resolution</text>
+    <text x="1040" y="558" text-anchor="middle" font-size="9" fill="white">Differential Sync Engine</text>
+    <text x="1040" y="570" text-anchor="middle" font-size="8" fill="#80CBC4">SQLite + MQTT Bridge</text>
+    
+    <!-- Messaging Layer -->
+    <rect x="70" y="610" width="420" height="130" fill="#7B1FA2" stroke="#4A148C" stroke-width="2" rx="5"/>
+    <text x="280" y="632" text-anchor="middle" font-size="14" font-weight="bold" fill="white">📨 Kafka Cluster (Event Bus)</text>
+    <line x1="75" y1="640" x2="485" y2="640" stroke="#E1BEE7" stroke-width="1"/>
+    <text x="90" y="658" font-size="10" fill="#E1BEE7">Topics:</text>
+    <text x="90" y="675" font-size="9" fill="white">• ride.requested → Matching</text>
+    <text x="90" y="690" font-size="9" fill="white">• ride.matched → Dispatch</text>
+    <text x="90" y="705" font-size="9" fill="white">• ride.confirmed → TripExecution</text>
+    <text x="90" y="720" font-size="9" fill="white">• trip.low_battery → Charging</text>
+    <text x="280" y="733" text-anchor="middle" font-size="8" fill="#CE93D8">3 Brokers | Retention: 7 days</text>
+    
+    <rect x="510" y="610" width="420" height="130" fill="#D32F2F" stroke="#B71C1C" stroke-width="2" rx="5"/>
+    <text x="720" y="632" text-anchor="middle" font-size="14" font-weight="bold" fill="white">📡 MQTT Broker (Mosquitto)</text>
+    <line x1="515" y1="640" x2="925" y2="640" stroke="#FFCDD2" stroke-width="1"/>
+    <text x="530" y="658" font-size="10" fill="#FFCDD2">Local per City:</text>
+    <text x="530" y="675" font-size="9" fill="white">• driver/+/location (QoS 1)</text>
+    <text x="530" y="690" font-size="9" fill="white">• notification/+ (QoS 0)</text>
+    <text x="530" y="705" font-size="9" fill="white">• sync/delta (QoS 1, Retained)</text>
+    <text x="720" y="720" text-anchor="middle" font-size="8" fill="#EF9A9A">Bridge → Kafka when Online</text>
+    <text x="720" y="733" text-anchor="middle" font-size="8" fill="#FFCDD2">Fallback: SQLite Buffer</text>
+    
+    <!-- Notification Service -->
+    <rect x="950" y="370" width="180" height="90" fill="#FF6F00" stroke="#E65100" stroke-width="2" rx="5"/>
+    <text x="1040" y="392" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Notification</text>
+    <text x="1040" y="410" text-anchor="middle" font-size="10" fill="#FFE0B2">FastAPI + Hexagonal</text>
+    <line x1="955" y1="418" x2="1125" y2="418" stroke="#FFE0B2" stroke-width="1"/>
+    <text x="1040" y="435" text-anchor="middle" font-size="9" fill="white">Multi-Channel:</text>
+    <text x="1040" y="450" text-anchor="middle" font-size="9" fill="white">FCM → SMS → USSD</text>
+    <text x="1040" y="465" text-anchor="middle" font-size="8" fill="#FFCC80">Latency: &lt;100ms</text>
+  </g>
+
+  <!-- ===================== OBSERVABILITY LAYER ===================== -->
+  <g id="observability">
+    <rect x="50" y="1050" width="1100" height="220" fill="#FFF3E0" stroke="#E65100" stroke-width="3" filter="url(#shadow)" rx="8"/>
+    <text x="600" y="1075" text-anchor="middle" font-size="16" font-weight="bold" fill="#BF360C">📊 Observability Layer</text>
+    
+    <rect x="70" y="1095" width="190" height="85" fill="#FF6F00" stroke="#E65100" stroke-width="2" rx="5"/>
+    <text x="165" y="1115" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Prometheus</text>
+    <line x1="75" y1="1123" x2="255" y2="1123" stroke="#FFE0B2" stroke-width="1"/>
+    <text x="165" y="1138" text-anchor="middle" font-size="9" fill="white">Metrics Scraper</text>
+    <text x="165" y="1152" text-anchor="middle" font-size="9" fill="white">Time-Series Storage</text>
+    <text x="165" y="1166" text-anchor="middle" font-size="8" fill="#FFE0B2">Retention: 30 days</text>
+    
+    <rect x="280" y="1095" width="190" height="85" fill="#FF6F00" stroke="#E65100" stroke-width="2" rx="5"/>
+    <text x="375" y="1115" text-anchor="middle" font-size="13" font-weight="bold" fill="white">ELK Stack</text>
+    <line x1="285" y1="1123" x2="465" y2="1123" stroke="#FFE0B2" stroke-width="1"/>
+    <text x="375" y="1138" text-anchor="middle" font-size="9" fill="white">Elasticsearch + Logstash</text>
+    <text x="375" y="1152" text-anchor="middle" font-size="9" fill="white">Kibana Dashboards</text>
+    <text x="375" y="1166" text-anchor="middle" font-size="8" fill="#FFE0B2">Retention: 14 days</text>
+    
+    <rect x="490" y="1095" width="190" height="85" fill="#FF6F00" stroke="#E65100" stroke-width="2" rx="5"/>
+    <text x="585" y="1115" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Local Metrics Buffer</text>
+    <line x1="495" y1="1123" x2="675" y2="1123" stroke="#FFE0B2" stroke-width="1"/>
+    <text x="585" y="1138" text-anchor="middle" font-size="9" fill="white">SQLite (Blackout)</text>
+    <text x="585" y="1152" text-anchor="middle" font-size="9" fill="white">Batch Upload</text>
+    <text x="585" y="1166" text-anchor="middle" font-size="8" fill="#FFE0B2">5GB/city</text>
+  </g>
+
+  <!-- ===================== STORAGE LAYER ===================== -->
+  <g id="storage">
+    <rect x="50" y="1300" width="1100" height="220" fill="#FFF9C4" stroke="#F57F17" stroke-width="3" filter="url(#shadow)" rx="8"/>
+    <text x="600" y="1325" text-anchor="middle" font-size="16" font-weight="bold" fill="#F57F17">💾 Storage Layer (Distributed)</text>
+    
+    <rect x="70" y="1345" width="190" height="85" fill="#FF6F00" stroke="#E65100" stroke-width="2" rx="5"/>
+    <text x="165" y="1365" text-anchor="middle" font-size="13" font-weight="bold" fill="white">PostgreSQL</text>
+    <line x1="75" y1="1373" x2="255" y2="1373" stroke="#FFE0B2" stroke-width="1"/>
+    <text x="165" y="1388" text-anchor="middle" font-size="9" fill="white">Rides + Payments</text>
+    <text x="165" y="1402" text-anchor="middle" font-size="9" fill="white">ACID Transactions</text>
+    <text x="165" y="1416" text-anchor="middle" font-size="8" fill="#FFE0B2">Indexed: ride_id, driver_id</text>
+    
+    <rect x="280" y="1345" width="190" height="85" fill="#FF6F00" stroke="#E65100" stroke-width="2" rx="5"/>
+    <text x="375" y="1365" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Redis Cluster</text>
+    <line x1="285" y1="1373" x2="465" y2="1373" stroke="#FFE0B2" stroke-width="1"/>
+    <text x="375" y="1388" text-anchor="middle" font-size="9" fill="white">H3 Grid + Cache</text>
+    <text x="375" y="1402" text-anchor="middle" font-size="9" fill="white">Driver State</text>
+    <text x="375" y="1416" text-anchor="middle" font-size="8" fill="#FFE0B2">Sharded by City (8 nodes)</text>
+    
+    <rect x="490" y="1345" width="190" height="85" fill="#FF8F00" stroke="#EF6C00" stroke-width="2" rx="5"/>
+    <text x="585" y="1365" text-anchor="middle" font-size="13" font-weight="bold" fill="white">ScyllaDB</text>
+    <line x1="495" y1="1373" x2="675" y2="1373" stroke="#FFE0B2" stroke-width="1"/>
+    <text x="585" y="1388" text-anchor="middle" font-size="9" fill="white">Trip Time-Series</text>
+    <text x="585" y="1402" text-anchor="middle" font-size="9" fill="white">Real-time Tracking</text>
+    <text x="585" y="1416" text-anchor="middle" font-size="8" fill="#FFE0B2">Optimized for Writes</text>
+    
+    <rect x="700" y="1345" width="190" height="85" fill="#FF8F00" stroke="#EF6C00" stroke-width="2" rx="5"/>
+    <text x="795" y="1365" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Cassandra</text>
+    <line x1="705" y1="1373" x2="885" y2="1373" stroke="#FFE0B2" stroke-width="1"/>
+    <text x="795" y="1388" text-anchor="middle" font-size="9" fill="white">EV Telemetry</text>
+    <text x="795" y="1402" text-anchor="middle" font-size="9" fill="white">Battery Metrics</text>
+    <text x="795" y="1416" text-anchor="middle" font-size="8" fill="#FFE0B2">Wide-Column Store</text>
+    
+    <rect x="910" y="1345" width="220" height="85" fill="#FFB74D" stroke="#F57F17" stroke-width="2" rx="5"/>
+    <text x="1020" y="1365" text-anchor="middle" font-size="13" font-weight="bold" fill="white">SQLite (Edge)</text>
+    <line x1="915" y1="1373" x2="1125" y2="1373" stroke="#FFE0B2" stroke-width="1"/>
+    <text x="1020" y="1388" text-anchor="middle" font-size="9" fill="white">Offline Cache (5GB/city)</text>
+    <text x="1020" y="1402" text-anchor="middle" font-size="9" fill="white">CRDT Buffer</text>
+    <text x="1020" y="1416" text-anchor="middle" font-size="8" fill="#FFE0B2">Write-Ahead Log</text>
+    
+    <rect x="70" y="1445" width="320" height="60" fill="#FFCC80" stroke="#F57F17" stroke-width="2" rx="5"/>
+    <text x="230" y="1465" text-anchor="middle" font-size="12" font-weight="bold" fill="#E65100">Arvan Cloud CDN</text>
+    <text x="230" y="1482" text-anchor="middle" font-size="9" fill="#BF360C">Map Tiles + Static Assets + API Cache</text>
+    <text x="230" y="1496" text-anchor="middle" font-size="8" fill="#FF6F00">Edge Caching | Tehran, Mashhad, Isfahan</text>
+  </g>
+
+  <!-- ===================== CONNECTIONS ===================== -->
+  <!-- Edge to Gateway -->
+  <line x1="370" y1="125" x2="450" y2="125" stroke="#1976D2" stroke-width="3" marker-end="url(#grpc-arrow)"/>
+  <text x="405" y="118" font-size="10" font-weight="bold" fill="#1976D2">gRPC-Web</text>
+  
+  <!-- Gateway to Services -->
+  <line x1="590" y1="280" x2="390" y2="370" stroke="#1976D2" stroke-width="2.5" marker-end="url(#grpc-arrow)"/>
+  <text x="480" y="325" font-size="9" font-weight="bold" fill="#1976D2">gRPC</text>
+  
+  <!-- Service Connections -->
+  <!-- DriverAvailability → MatchingEngine -->
+  <line x1="270" y1="415" x2="510" y2="415" stroke="#1976D2" stroke-width="2" marker-end="url(#grpc-arrow)"/>
+  <text x="390" y="408" font-size="9" font-weight="bold" fill="#1976D2">gRPC</text>
+  <text x="390" y="430" font-size="8" fill="#0D47A1">Driver Location + Status</text>
+  
+  <!-- RideRequest → Kafka → MatchingEngine -->
+  <line x1="390" y1="460" x2="280" y2="610" stroke="#7B1FA2" stroke-width="2" marker-end="url(#kafka-arrow)"/>
+  <text x="320" y="530" font-size="9" font-weight="bold" fill="#7B1FA2">Kafka</text>
+  <text x="320" y="545" font-size="8" fill="#4A148C">ride.requested</text>
+  
+  <line x1="340" y1="740" x2="610" y2="460" stroke="#7B1FA2" stroke-width="2" marker-end="url(#kafka-arrow)"/>
+  <text x="470" y="600" font-size="9" font-weight="bold" fill="#7B1FA2">Kafka</text>
+  <text x="470" y="615" font-size="8" fill="#4A148C">ride.matched</text>
+  
+  <!-- MatchingEngine → Dispatch -->
+  <line x1="710" y1="415" x2="730" y2="415" stroke="#7B1FA2" stroke-width="2" marker-end="url(#kafka-arrow)"/>
+  <text x="720" y="408" font-size="9" font-weight="bold" fill="#7B1FA2">Kafka</text>
+  <text x="720" y="430" font-size="8" fill="#4A148C">ride.matched</text>
+  
+  <!-- Dispatch → MQTT (Notifications) -->
+  <line x1="830" y1="460" x2="720" y2="610" stroke="#D32F2F" stroke-width="2" marker-end="url(#mqtt-arrow)"/>
+  <text x="775" y="535" font-size="9" font-weight="bold" fill="#D32F2F">MQTT</text>
+  <text x="775" y="550" font-size="8" fill="#B71C1C">notification/+</text>
+  
+  <!-- Dispatch → TripExecution -->
+  <line x1="830" y1="460" x2="170" y2="485" stroke="#7B1FA2" stroke-width="2" marker-end="url(#kafka-arrow)"/>
+  <text x="500" y="475" font-size="9" font-weight="bold" fill="#7B1FA2">Kafka</text>
+  <text x="500" y="490" font-size="8" fill="#4A148C">ride.confirmed</text>
+  
+  <!-- TripExecution → ChargingOrchestration -->
+  <line x1="170" y1="575" x2="610" y2="485" stroke="#7B1FA2" stroke-width="2" marker-end="url(#kafka-arrow)"/>
+  <text x="390" y="530" font-size="9" font-weight="bold" fill="#7B1FA2">Kafka</text>
+  <text x="390" y="545" font-size="8" fill="#4A148C">trip.low_battery</text>
+  
+  <!-- Payment → CDN -->
+  <line x1="830" y1="575" x2="230" y2="1445" stroke="#388E3C" stroke-width="2" marker-end="url(#rest-arrow)"/>
+  <text x="530" y="1010" font-size="9" font-weight="bold" fill="#388E3C">REST</text>
+  
+  <!-- OfflineSync → MQTT -->
+  <line x1="1040" y1="575" x2="720" y2="610" stroke="#D32F2F" stroke-width="2" marker-end="url(#mqtt-arrow)"/>
+  <text x="880" y="595" font-size="9" font-weight="bold" fill="#D32F2F">MQTT</text>
+  <text x="880" y="610" font-size="8" fill="#B71C1C">sync/delta</text>
+  
+  <!-- Microservices to Observability -->
+  <line x1="600" y1="1000" x2="600" y2="1050" stroke="#7B1FA2" stroke-width="2" marker-end="url(#kafka-arrow)"/>
+  <text x="610" y="1025" font-size="9" font-weight="bold" fill="#7B1FA2">Kafka</text>
+  <text x="610" y="1040" font-size="8" fill="#4A148C">metrics.*</text>
+</svg>
